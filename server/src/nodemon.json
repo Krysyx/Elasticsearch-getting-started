@@ -1,0 +1,11 @@
+{
+  "ext": "ts, json",
+  "ignore": [".git", "node_modules"],
+  "watch": ["src"],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "execMap": {
+    "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm src/server.ts"
+  }
+}

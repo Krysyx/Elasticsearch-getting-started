@@ -1,7 +1,9 @@
 import { Router } from "express";
-import moduleName from "module";
-const router = Router();
+import elasticRouter from "../controllers/elasticsearch";
 
-router.get("/");
+const router = Router();
+const { getBanksData } = elasticRouter;
+
+router.get("/", getBanksData);
 
 export default router;

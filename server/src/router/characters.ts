@@ -7,13 +7,17 @@ const {
   characterExistsById,
   getDocumentById,
   getDocuments,
+  getBySuggestion,
+  sql,
 } = controller;
 const router = Router();
 
 router.get("/", getCharacters);
 router.get("/exists/:id", characterExistsById);
 router.get("/exists/json/:index/:id", getDocumentById);
+router.get("/suggest", getBySuggestion);
 router.get("/msearch", getDocuments);
+router.get("/sql", sql);
 router.post("/bulk", bulkCreate);
 
 export default router;

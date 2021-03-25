@@ -1,6 +1,7 @@
 import { ElasticSearch } from "../models/controllers";
 import body from "../data/characters";
 import client from "../config/client";
+import { Col } from "../models/elasticsearch";
 
 const controller: ElasticSearch = {
   getBanksData: async (req, res, next) => {
@@ -48,6 +49,30 @@ const controller: ElasticSearch = {
       next(error);
     }
   },
+  getBySuggestion: async (req, res, next) => {
+    try {
+      const { body } = await client.search({
+        index: "got",
+        body: {
+          query: {
+            match: {
+              text: "blood",
+            },
+          },
+          suggest: {
+            gotsuggest: {
+              term: { field: "text" },
+              text: "blod",
+            },
+          },
+        },
+      });
+
+      return res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  },
   characterExistsById: async ({ params: { id } }, res, next) => {
     try {
       const { body } = await client.exists({ index: "got", id });
@@ -76,6 +101,29 @@ const controller: ElasticSearch = {
       });
 
       return res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  },
+  sql: async (req, res, next) => {
+    try {
+      const { body } = await client.sql.query({
+        body: {
+          query: "SELECT * FROM \"got\" WHERE user='ned'",
+        },
+      });
+
+      const results = body.rows.map((value: (string | number)[]) => {
+        const data: any = {};
+
+        value.forEach((element: string | number, index: number) => {
+          data[body.columns[index].name] = element;
+        });
+
+        return data;
+      });
+
+      return res.status(200).json(results);
     } catch (error) {
       next(error);
     }

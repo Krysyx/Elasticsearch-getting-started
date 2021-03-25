@@ -1,6 +1,6 @@
 import { Client } from "@elastic/elasticsearch";
-import { config } from "dotenv";
-config({ path: `${process.env.NODE_ENV}.env` });
+import dotenv from "dotenv";
+dotenv.config({ path: `${process.env.NODE_ENV}.env` });
 
 const client = new Client({
   node: process.env.ELASTICSEARCH_URL,

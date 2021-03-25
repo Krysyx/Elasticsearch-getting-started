@@ -1,7 +1,7 @@
 import express from "express";
-import { config } from "dotenv";
+import dotenv from "dotenv";
 import { bankRouter, charactersRouter } from "./router";
-config({ path: `${process.env.NODE_ENV}.env` });
+dotenv.config({ path: `${process.env.NODE_ENV}.env` });
 
 const PORT = process.env.PORT || 7201;
 const server = express();

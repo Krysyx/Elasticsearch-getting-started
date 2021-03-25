@@ -28,6 +28,18 @@ const controller: ElasticSearch = {
       next(error);
     }
   },
+  getCharacters: async (req, res, next) => {
+    try {
+      const { body } = await client.search({
+        index: "got",
+        body: { query: { match_all: {} } },
+      });
+
+      return res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  },
   bulkCreate: async (req, res, next) => {
     try {
       const { body: results } = await client.bulk({ body, refresh: true });

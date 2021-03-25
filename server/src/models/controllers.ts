@@ -5,5 +5,6 @@ export interface ElasticSearch {
   getCharacters: ExpressRequestFnMapper;
   getDocumentById: ExpressRequestFnMapper;
   characterExistsById: ExpressRequestFnMapper;
+  getDocuments: ExpressRequestFnMapper;
   bulkCreate: ExpressRequestFnMapper;
 }

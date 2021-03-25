@@ -64,6 +64,22 @@ const controller: ElasticSearch = {
       next(error);
     }
   },
+  getDocuments: async (req, res, next) => {
+    try {
+      const { body } = await client.msearch({
+        body: [
+          { index: "got" },
+          { query: { match: { user: "tyrion" } } },
+          { index: "got" },
+          { query: { range: { id: { gte: 3 } } } },
+        ],
+      });
+
+      return res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export default controller;

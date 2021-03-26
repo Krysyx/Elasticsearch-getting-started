@@ -145,6 +145,27 @@ const controller: ElasticSearch = {
       next(error);
     }
   },
+  updateQuery: async (req, res, next) => {
+    try {
+      await client.updateByQuery({
+        index: "got",
+        refresh: true,
+        body: {
+          script: {
+            params: { house: "stark" },
+            source: `ctx._source["house"] = params.house`,
+          },
+          query: {
+            match: { text: "bring" },
+          },
+        },
+      });
+
+      res.end();
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export default controller;

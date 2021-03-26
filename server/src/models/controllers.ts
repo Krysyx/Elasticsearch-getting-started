@@ -9,4 +9,5 @@ export interface ElasticSearch {
   getDocuments: ExpressRequestFnMapper;
   bulkCreate: ExpressRequestFnMapper;
   sql: ExpressRequestFnMapper;
+  updateById: ExpressRequestFnMapper;
 }

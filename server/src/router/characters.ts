@@ -9,6 +9,7 @@ const {
   getDocuments,
   getBySuggestion,
   sql,
+  updateById,
 } = controller;
 const router = Router();
 
@@ -19,5 +20,6 @@ router.get("/suggest", getBySuggestion);
 router.get("/msearch", getDocuments);
 router.get("/sql", sql);
 router.post("/bulk", bulkCreate);
+router.post("/update/:id", updateById);
 
 export default router;

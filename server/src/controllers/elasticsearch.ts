@@ -1,7 +1,6 @@
 import { ElasticSearch } from "../models/controllers";
 import body from "../data/characters";
 import client from "../config/client";
-import { Col } from "../models/elasticsearch";
 
 const controller: ElasticSearch = {
   getBanksData: async (req, res, next) => {
@@ -124,6 +123,24 @@ const controller: ElasticSearch = {
       });
 
       return res.status(200).json(results);
+    } catch (error) {
+      next(error);
+    }
+  },
+  updateById: async ({ params: { id } }, res, next) => {
+    try {
+      await client.update({
+        index: "got",
+        id,
+        body: {
+          script: {
+            source: "ctx._source.text = params.text",
+            params: { text: "Newly updated text" },
+          },
+        },
+      });
+
+      return res.end();
     } catch (error) {
       next(error);
     }

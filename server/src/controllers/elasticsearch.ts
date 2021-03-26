@@ -28,10 +28,10 @@ const controller: ElasticSearch = {
       next(error);
     }
   },
-  getCharacters: async (req, res, next) => {
+  getCharacters: async ({ params: { index } }, res, next) => {
     try {
       const { body } = await client.search({
-        index: "got",
+        index,
         body: { query: { match_all: {} } },
       });
 
@@ -149,7 +149,6 @@ const controller: ElasticSearch = {
     try {
       await client.updateByQuery({
         index: "got",
-        refresh: true,
         body: {
           script: {
             params: { flag: "north" },
@@ -157,6 +156,31 @@ const controller: ElasticSearch = {
           },
           query: {
             match: { text: "bring" },
+          },
+        },
+      });
+
+      res.end();
+    } catch (error) {
+      next(error);
+    }
+  },
+  reIndexDocuments: async ({ params: { user } }, res, next) => {
+    try {
+      await client.reindex({
+        wait_for_completion: true,
+        body: {
+          source: {
+            index: "got",
+            query: {
+              match: { user },
+            },
+          },
+          dest: {
+            index: "lannister",
+          },
+          script: {
+            source: `ctx._source.remove("date")`,
           },
         },
       });

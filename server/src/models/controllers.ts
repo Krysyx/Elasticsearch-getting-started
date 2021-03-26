@@ -11,4 +11,5 @@ export interface ElasticSearch {
   sql: ExpressRequestFnMapper;
   updateById: ExpressRequestFnMapper;
   updateQuery: ExpressRequestFnMapper;
+  reIndexDocuments: ExpressRequestFnMapper;
 }

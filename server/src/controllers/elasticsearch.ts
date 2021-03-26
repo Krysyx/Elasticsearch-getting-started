@@ -152,8 +152,8 @@ const controller: ElasticSearch = {
         refresh: true,
         body: {
           script: {
-            params: { house: "stark" },
-            source: `ctx._source["house"] = params.house`,
+            params: { flag: "north" },
+            source: `ctx._source.flag = params.flag`,
           },
           query: {
             match: { text: "bring" },
